@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaWave - Book Your Movie</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button id="themeToggle" class="theme-toggle-btn">🌙 Dark Mode</button>
+            <h1>CinemaWave</h1>
+            <p>Experience movies like never before</p>
+        </div>
+
+        <div class="booking-container">
+            <div class="movie-selection">
+                <h2 class="section-title">Select Movie</h2>
+                <div class="movie-grid">
+                    <div class="movie-card" data-movie="avengers" data-price="15">
+                        <div class="movie-poster">🦸‍♂️ Action Hero</div>
+                        <div class="movie-title">Avengers: Endgame</div>
+                        <div class="movie-time">2h 58m</div>
+                    </div>
+                    <div class="movie-card" data-movie="romance" data-price="12">
+                        <div class="movie-poster">💕 Romance</div>
+                        <div class="movie-title">The Notebook</div>
+                        <div class="movie-time">2h 3m</div>
+                    </div>
+                    <div class="movie-card" data-movie="comedy" data-price="13">
+                        <div class="movie-poster">😂 Comedy</div>
+                        <div class="movie-title">Deadpool</div>
+                        <div class="movie-time">1h 48m</div>
+                    </div>
+                    <div class="movie-card" data-movie="horror" data-price="14">
+                        <div class="movie-poster">👻 Horror</div>
+                        <div class="movie-title">The Conjuring</div>
+                        <div class="movie-time">1h 52m</div>
+                    </div>
+                    <div class="movie-card" data-movie="thriller" data-price="16">
+                        <div class="movie-poster">🕵️‍♂️ Thriller</div>
+                        <div class="movie-title">Inception</div>
+                        <div class="movie-time">2h 28m</div>
+                    </div>
+                    <div class="movie-card" data-movie="documentary" data-price="10">
+                        <div class="movie-poster">🎬 Documentary</div>
+                        <div class="movie-title">Our Planet</div>
+                        <div class="movie-time">1h 50m</div>
+                    </div>
+                </div>
+                
+                <div class="time-slots">
+                    <div class="time-slot" data-time="2:00 PM">2:00 PM</div>
+                    <div class="time-slot" data-time="5:00 PM">5:00 PM</div>
+                    <div class="time-slot" data-time="8:00 PM">8:00 PM</div>
+                    <div class="time-slot" data-time="11:00 PM">11:00 PM</div>
+                </div>
+            </div>
+
+            <div class="theater-section">
+                <h2 class="section-title">Select Seats</h2>
+                <div class="screen">🎬 SCREEN</div>
+                
+                <div class="seats-container" id="seatsContainer">
+                  
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: linear-gradient(135deg, #2ecc71, #27ae60);"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: linear-gradient(135deg, #3498db, #2980b9);"></div>
+                        <span>Selected</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: linear-gradient(135deg, #e74c3c, #c0392b);"></div>
+                        <span>Occupied</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="booking-summary">
+            <h2 class="section-title">Booking Summary</h2>
+            <div class="summary-item">
+                <span>Movie:</span>
+                <span id="selectedMovie">Select a movie</span>
+            </div>
+            <div class="summary-item">
+                <span>Time:</span>
+                <span id="selectedTime">Select time</span>
+            </div>
+            <div class="summary-item">
+                <span>Seats:</span>
+                <span id="selectedSeats">No seats selected</span>
+            </div>
+            <div class="summary-item">
+                <span>Total:</span>
+                <span id="totalPrice">$0</span>
+            </div>
+            <button class="book-btn" id="bookBtn" disabled>Proceed to Payment</button>
+        </div>
+    </div>
+
+   
+    <div class="modal" id="paymentModal">
+        <div class="modal-content payment-modal">
+            <div class="modal-header">
+                <h2>Complete Payment</h2>
+                <button class="close-btn" onclick="closePaymentModal()">&times;</button>
+            </div>
+            
+            <div class="payment-summary">
+                <div class="payment-item">
+                    <span>Movie:</span>
+                    <span id="paymentMovie"></span>
+                </div>
+                <div class="payment-item">
+                    <span>Time:</span>
+                    <span id="paymentTime"></span>
+                </div>
+                <div class="payment-item">
+                    <span>Seats:</span>
+                    <span id="paymentSeats"></span>
+                </div>
+                <div class="payment-item total">
+                    <span>Total Amount:</span>
+                    <span id="paymentTotal"></span>
+                </div>
+            </div>
+
+            <div class="payment-section">
+                <h3>Pay via UPI</h3>
+                <div class="qr-section">
+                    <div class="qr-placeholder" id="qrCode">
+                        <img src="./Images/my-gpay-qr.jpeg" alt="Scan to Pay via GPAY" class="qr-img">
+                    </div>
+                    <div class="upi-details">
+                        <p><strong>UPI ID:</strong> <span id="upiId">your-upi-id@paytm</span></p>
+                        <p><strong>Amount:</strong> ₹<span id="upiAmount">0</span></p>
+                        <button class="copy-btn" onclick="copyUpiId()">Copy UPI ID</button>
+                    </div>
+                </div>
+
+                <div class="manual-entry">
+                    <p><strong>Or enter transaction ID manually:</strong></p>
+                    <input type="text" id="transactionId" placeholder="Enter UPI Transaction ID" maxlength="20">
+                    <button class="verify-btn" onclick="verifyPayment()">Verify Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">✅</div>
+            <h2>Booking Confirmed!</h2>
+            <p>Your tickets have been successfully booked.</p>
+            <div class="booking-details">
+                <p><strong>Booking ID:</strong> <span id="bookingId"></span></p>
+                <p><strong>Transaction ID:</strong> <span id="confirmedTransactionId"></span></p>
+                <p><strong>Date:</strong> <span id="bookingDate"></span></p>
+            </div>
+            <button class="book-btn" onclick="closeModal()" style="margin-top: 20px;">Close</button>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>
